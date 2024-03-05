@@ -12,5 +12,66 @@
 </html>
 <script>
 
+//Game variables
+var mysteryNumber = 50;
+var playerGuess = 0;
+var guessesRemaining = 10;
+var guessesMade = 0;
+var gameState = "";
+var gameWon = false;
 
+//the button
+var button = document.querySelector("button");
+button.style.cursor = "pointer";
+button.addEventListener("click", clickHandler, false);
+
+function clickHandler()
+{
+    playGame();
+}
+ function playGame(){
+
+    guessesRemaining--;
+    guessesMade++;
+
+    gameState = "Guess: " + guessesMade + ", Remaining: " + guessesRemaining;
+
+    playerGuess = parseInt(input.value);
+
+    if(   playerGuess > mysteryNumber    ) {
+        output.innerHTML = "That's too high." + gameState;
+        if (guessesRemaining < 1)
+        {
+            endGame();
+        }
+    }
+    else if( playerGuess < mysteryNumber  )
+    {
+        output.innerHTML = "That's too low."  + gameState;
+        if (guessesRemaining < 1)
+        {
+            endGame();
+        }
+    }
+    else if (  playerGuess === mysteryNumber )
+    {
+        //output.innerHTML = "You got it.";
+        gameWon = true;
+        endGame();
+    }
+ }
+
+ function endGame()
+ {
+    if (gameWon){
+        output.innerHTML = "Yes, it's " + mysteryNumber + "!" + "<br>"
+                           + "It only took you  " + guessesMade + " guesses.";
+    }
+    else
+    {
+        output.innerHTML = "No more guesses left! " + "<br>"
+                           + "The number was: " + mysteryNumber + ".";
+
+    }
+ }
 </script>
