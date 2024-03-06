@@ -6,14 +6,14 @@
     </head>
     <body>
         <p id="output">I am thinking of a number between 0 and 99.</p>
-        <input id="input" type="text" placeholder="Enter your guess…"> 
+        <input id="input" type="text" placeholder="Enter your guess…" autofocus> 
         <button>guess</button>
     </body>
 </html>
 <script>
 
 //Game variables
-var mysteryNumber = 50;
+var mysteryNumber = Math.floor(Math.random() * 100);
 var playerGuess = 0;
 var guessesRemaining = 10;
 var guessesMade = 0;
@@ -24,19 +24,38 @@ var gameWon = false;
 var button = document.querySelector("button");
 button.style.cursor = "pointer";
 button.addEventListener("click", clickHandler, false);
+window.addEventListener("keydown", keydownHandler, false);
 
+function keydownHandler(event){
+    if (event.keyCode === 13)
+    {
+        validateInput(); 
+    }
+}
 function clickHandler()
 {
-    playGame();
+    validateInput();
 }
+
+function validateInput(){
+
+    playerGuess = parseInt(input.value);
+
+    if(isNaN(playerGuess)){
+        output.innerHTML = "Please enter a number.";
+    }
+    else
+    {
+        playGame();
+    }
+}
+
  function playGame(){
 
     guessesRemaining--;
     guessesMade++;
 
     gameState = "Guess: " + guessesMade + ", Remaining: " + guessesRemaining;
-
-    playerGuess = parseInt(input.value);
 
     if(   playerGuess > mysteryNumber    ) {
         output.innerHTML = "That's too high." + gameState;
@@ -73,5 +92,12 @@ function clickHandler()
                            + "The number was: " + mysteryNumber + ".";
 
     }
+
+    button.removeEventListener("click", clickHandler, false);
+    button.disabled = true;
+
+    window.removeEventListener("keydown", keydownHandler, false);
+
+    input.disabled = true;
  }
 </script>
