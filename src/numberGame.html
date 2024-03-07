@@ -4,7 +4,11 @@
         <link rel="stylesheet" href="styles.css">
         <title>Number guessing game</title>
     </head>
-    <body>
+    <body> 
+        <div id="stage">
+            <div id="scale"></div>
+            <div id="arrow"></div>
+        </div>
         <p id="output">I am thinking of a number between 0 and 99.</p>
         <input id="input" type="text" placeholder="Enter your guess…" autofocus> 
         <button>guess</button>
@@ -19,6 +23,7 @@ var guessesRemaining = 10;
 var guessesMade = 0;
 var gameState = "";
 var gameWon = false;
+var arrow = document.querySelector("#arrow");
 
 //the button
 var button = document.querySelector("button");
@@ -26,12 +31,17 @@ button.style.cursor = "pointer";
 button.addEventListener("click", clickHandler, false);
 window.addEventListener("keydown", keydownHandler, false);
 
+function render(){
+    arrow.style.left = playerGuess * 3 + "px";
+}
+
 function keydownHandler(event){
     if (event.keyCode === 13)
     {
         validateInput(); 
     }
 }
+
 function clickHandler()
 {
     validateInput();
@@ -78,6 +88,7 @@ function validateInput(){
         gameWon = true;
         endGame();
     }
+    render();
  }
 
  function endGame()
