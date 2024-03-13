@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Search in array</title>
+    </head>
+    <body> 
+        <div id="stage">
+            <div id="scale"></div>
+            <div id="arrow"></div>
+        </div>
+        <p id="output">Sóc un armari.</p>
+        <input id="input" type="text" placeholder="Enter your guess…" autofocus> 
+        <button id="cercar">cercar</button>
+        <button id="add">add</button>
+        <button id="tirar">drop</button>
+        <button id="obrir">obrir</button>
+    </body>
+</html>
+
+<script>
+
+var armari = ["xaqueta", "gorra", "tovallola", "camisa"];
+var input = document.querySelector("#input");
+var output = document.querySelector("#output");
+var cercar = document.querySelector("#cercar");
+var add = document.querySelector("#add");
+var tirar = document.querySelector("#tirar");
+var obrir = document.querySelector("#obrir");
+
+cercar.addEventListener("click", trobar, false);
+add.addEventListener("click", afegir, false);
+tirar.addEventListener("click", drop, false);
+obrir.addEventListener("click", obrirArmari, false);
+
+function drop(){
+    
+    posicio = trobar();
+    if (posicio === armari.length) armari.splice(posicio, 1);
+}
+function obrirArmari(){
+    output.innerHTML = armari;
+}
+
+function trobar(){
+    var valorEntrat ="";
+    valorEntrat = input.value;
+
+    var trobat = false;
+    var posicio = 0;
+    for(i=0; i<armari.length; i++){
+        posicio = valorEntrat.indexOf(armari[i])
+        if (posicio !== -1){
+            trobat = true; 
+            break;
+        }
+    }
+    if (trobat) output.innerHTML = "Si que estava i a la posicio: " + 
+                                    posicio + " i " + ++i + " voltes he donat";
+    else output.innerHTML = "No estava " + i + " voltes he donat";
+    return --i;
+}
+function afegir(){
+    var valorEntrat ="";
+    valorEntrat = input.value;
+
+    armari.push(valorEntrat);
+}
+
+</script>
